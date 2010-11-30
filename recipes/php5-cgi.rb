@@ -29,6 +29,6 @@ case node[:platform]
     #placeholder modify when available
   when "debian", "ubuntu"
     package "php5-cgi" do
-      action :upgrade
+      action :install
     end
 end

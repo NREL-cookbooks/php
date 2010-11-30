@@ -19,12 +19,16 @@
 #
 
 define :pear_module, :module => nil, :enable => true do
-  
   include_recipe "php::pear"
   
   if params[:enable]
-    execute "/usr/bin/pear install -a #{params[:module]}" do
-      only_if "/bin/sh -c '! /usr/bin/pear info #{params[:module]} 2>&1 1>/dev/null"
+    package_name = "#{params[:name]}"
+    if(params[:version])
+      package_name << "-#{params[:version]}"
+    end
+
+    execute "pear install --alldeps #{package_name}" do
+      not_if "pear info #{params[:name]} | grep 'Release Version *#{params[:version}'"
     end
   end
   

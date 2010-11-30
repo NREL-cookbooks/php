@@ -23,7 +23,7 @@ case node[:platform]
     #already there in centos, --with-pdo-sqlite=shared
   when "debian", "ubuntu"
     package "php5-sqlite" do
-      action :upgrade
+      action :install
     end
 end
 

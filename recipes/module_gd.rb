@@ -26,5 +26,5 @@ pack = value_for_platform(
 )
 
 package pack do
-  action :upgrade
+  action :install
 end

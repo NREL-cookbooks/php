@@ -23,6 +23,6 @@ case node[:platform]
     #centos php compiled with curl
   when "debian", "ubuntu"
     package "php5-curl" do
-      action :upgrade
+      action :install
     end
 end

@@ -20,9 +20,6 @@
 
 include_recipe "apache2"
 include_recipe "php::module_mysql"
-include_recipe "php::module_ldap"
-include_recipe "php::module_memcache"
-include_recipe "php::module_gd"
 include_recipe "php::module_pgsql"
 include_recipe "php::pear"
 
@@ -36,13 +33,13 @@ end
 
 packages = value_for_platform(
   [ "centos", "redhat", "fedora", "suse" ] => {
-    "default" => %w(php php-cli php-Smarty)
+    "default" => %w(php php-cli)
   },
-  "default" => %w{php5 php5-cli smarty}
+  "default" => %w{php5 php5-cli}
 )
 
 packages.each do |pkg|
   package pkg do
-    action :upgrade
+    action :install
   end
 end

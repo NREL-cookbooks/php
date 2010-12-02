@@ -28,7 +28,7 @@ define :pear_module, :module => nil, :enable => true do
     end
 
     execute "pear install --alldeps #{package_name}" do
-      not_if "pear info #{params[:name]} | grep 'Release Version *#{params[:version}'"
+      not_if "pear info #{params[:name]} | grep 'Release Version *#{params[:version]}'"
     end
   end
   

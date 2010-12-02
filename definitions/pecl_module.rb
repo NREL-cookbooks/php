@@ -14,7 +14,7 @@ define :pecl_module, :version => nil, :enable => true do
     end
 
     execute "pecl install --alldeps #{package_name}" do
-      not_if "pecl info #{params[:name]} | grep 'Release Version *#{params[:version}'"
+      not_if "pecl info #{params[:name]} | grep 'Release Version *#{params[:version]}'"
     end
   end
 end

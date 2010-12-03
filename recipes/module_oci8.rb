@@ -10,4 +10,5 @@ include_recipe "oracle_instantclient"
 
 pecl_module "oci8" do
   version node[:php][:module_oci8][:version]
+  answer_prompt "instantclient,#{node[:oracle_instantclient][:path]}" 
 end

@@ -18,11 +18,7 @@
 # limitations under the License.
 #
 
-include_recipe "php::module_mysql"
-include_recipe "php::module_sqlite3"
-include_recipe "php::module_memcache"
-include_recipe "php::module_gd"
-include_recipe "php::module_pgsql"
+include_recipe "php::pear"
 
 case node[:platform]
   when "centos", "redhat", "fedora", "suse"

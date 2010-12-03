@@ -13,7 +13,9 @@ define :pecl_module, :version => nil, :enable => true do
       package_name << "-#{params[:version]}"
     end
 
-    execute "pecl install --alldeps #{package_name}" do
+    answer_prompt = "yes '#{params[:answer_prompt]}' | " if params[:answer_prompt]
+
+    execute "#{answer_prompt}pecl install --alldeps #{package_name}" do
       not_if "pecl info #{params[:name]} | grep 'Release Version *#{::Regexp.escape(params[:version])} '"
     end
   end

@@ -18,6 +18,16 @@
 # limitations under the License.
 #
 
-package "php-pear" do
-  action :install
+packages = ["php-pear"]
+
+# Install the php-dev package for `phpize` so pecl extensions can be installed.
+packages = value_for_platform({
+  ["redhat", "centos", "fedora"] => { "default" => ["php-devel"] },
+  "default" => { "default" => ["php5-dev"] },
+})
+
+packages.each do |pkg|
+  package pkg do
+    action :install
+  end
 end

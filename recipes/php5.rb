@@ -21,7 +21,7 @@
 include_recipe "apache2"
 include_recipe "php::pear"
 
-cookbook_file value_for_platform([ "centos", "redhat", "fedora", "suse" ] => {"default" => "/etc/php.ini"}, "default" => "/etc/php5/apache2/php.ini") do
+cookbook_file node[:php][:ini_path] do
   source "apache2-php5.ini"
   owner "root"
   group "root"

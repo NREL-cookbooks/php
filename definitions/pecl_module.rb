@@ -7,6 +7,9 @@
 #
 
 define :pecl_module, :version => nil, :enable => true do
+  # PEAR needs to be installed before PECL is available.
+  include_recipe "php::pear"
+
   if params[:enable]
     package_name = "#{params[:name]}"
     if(params[:version])
@@ -17,6 +20,15 @@ define :pecl_module, :version => nil, :enable => true do
 
     execute "#{answer_prompt}pecl install --alldeps #{package_name}" do
       not_if "pecl info #{params[:name]} | grep 'Release Version *#{::Regexp.escape(params[:version])} '"
+    end
+
+    if(params[:ini])
+      file "#{node[:php][:confd_path]}/#{params[:name]}.ini" do
+        content params[:ini]
+        owner "root"
+        group "root"
+        mode "0644"
+      end
     end
   end
 end

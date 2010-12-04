@@ -21,7 +21,7 @@
 packages = ["php-pear"]
 
 # Install the php-dev package for `phpize` so pecl extensions can be installed.
-packages = value_for_platform({
+packages += value_for_platform({
   ["redhat", "centos", "fedora"] => { "default" => ["php-devel"] },
   "default" => { "default" => ["php5-dev"] },
 })

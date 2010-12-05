@@ -17,5 +17,8 @@ cookbook_file "#{node[:php][:confd_path]}/ctts.ini" do
   owner "root"
   group "root"
   mode "0644"
-end
 
+  if(node.recipe?("apache2"))
+    notifies :reload, "service[apache2]"
+  end
+end

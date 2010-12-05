@@ -28,6 +28,10 @@ define :pecl_module, :version => nil, :enable => true do
         owner "root"
         group "root"
         mode "0644"
+
+        if(node.recipe?("apache2"))
+          notifies :reload, "service[apache2]"
+        end
       end
     end
   end

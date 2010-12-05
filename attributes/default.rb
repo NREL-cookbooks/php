@@ -17,3 +17,4 @@ else
 end
 
 default[:php][:module_oci8][:version] = "1.4.4"
+default[:php][:module_yaml][:version] = "0.6.3"

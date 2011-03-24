@@ -6,9 +6,7 @@
 # Copyright 2010, NREL
 #
 
-if platform?("redhat", "centos", "fedora")
-  include_recipe "yum::epel"
-end
+include_recipe "yum::epel"
 
 package_name = value_for_platform({
   ["redhat", "centos", "fedora"] => { "default" => "libyaml-devel" },

@@ -37,7 +37,7 @@ action :install do
 
   if install_version
     Chef::Log.info("Installing #{@new_resource} version #{install_version}")
-    status = install_package(@new_resource.package_name, install_version)
+    status = install_package(@new_resource.package_name, install_version, @new_resource.answer_prompt)
     if status
       @new_resource.updated_by_last_action(true)
     end
@@ -134,8 +134,9 @@ def candidate_version
   end
 end
 
-def install_package(name, version)
-  pear_shell_out("echo -e \"\\r\" | #{@bin} -d preferred_state=#{can_haz(@new_resource, "preferred_state")} install -a#{expand_options(@new_resource.options)} #{prefix_channel(can_haz(@new_resource, "channel"))}#{name}-#{version}")
+def install_package(name, version, answer_prompt = nil)
+  pipe_answer_response = "yes '#{answer_prompt}' | " if(answer_prompt)
+  pear_shell_out("echo -e \"\\r\" | #{pipe_answer_response}#{@bin} -d preferred_state=#{can_haz(@new_resource, "preferred_state")} install -a#{expand_options(@new_resource.options)} #{prefix_channel(can_haz(@new_resource, "channel"))}#{name}-#{version}")
   manage_pecl_ini(name, :create, can_haz(@new_resource, "directives")) if pecl?
 end
 

@@ -15,7 +15,7 @@ package_name = value_for_platform({
 
 package package_name
 
-pecl_module "yaml" do
+php_pear "yaml" do
+  action :install
   version node[:php][:module_yaml][:version]
-  ini "extension=yaml.so"
 end

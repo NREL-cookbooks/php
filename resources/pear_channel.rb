@@ -1,9 +1,9 @@
 #
-# Author::  Joshua Timberman (<joshua@opscode.com>)
+# Author:: Seth Chisamore <schisamo@opscode.com>
 # Cookbook Name:: php
-# Recipe:: php5-cgi
+# Resource:: pear_channel
 #
-# Copyright 2009, Opscode, Inc.
+# Copyright:: 2011, Opscode, Inc <legal@opscode.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,13 +18,11 @@
 # limitations under the License.
 #
 
-include_recipe "php::pear"
+actions :discover, :add, :update, :remove
 
-case node[:platform]
-  when "centos", "redhat", "fedora", "suse"
-    #placeholder modify when available
-  when "debian", "ubuntu"
-    package "php5-cgi" do
-      action :install
-    end
-end
+attribute :channel_name, :kind_of => String, :name_attribute => true
+attribute :channel_xml, :kind_of => String
+
+# TODO add authenticated channel support!
+# attribute :username, :kind_of => String
+# attribute :password, :kind_of => String

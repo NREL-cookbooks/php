@@ -8,8 +8,8 @@
 
 include_recipe "oracle_instantclient"
 
-pecl_module "oci8" do
+php_pear "oci8" do
+  action :install
   version node[:php][:module_oci8][:version]
-  answer_prompt "instantclient,#{node[:oracle_instantclient][:path]}" 
-  ini "extension=oci8.so"
+  # answer_prompt "instantclient,#{node[:oracle_instantclient][:path]}" 
 end

@@ -1,9 +1,9 @@
 #
-# Author::  Joshua Timberman (<joshua@opscode.com>)
+# Author:: Seth Chisamore <schisamo@opscode.com>
 # Cookbook Name:: php
-# Recipe:: php5
+# Resource:: pear_package
 #
-# Copyright 2009, Opscode, Inc.
+# Copyright:: 2011, Opscode, Inc <legal@opscode.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,26 +18,11 @@
 # limitations under the License.
 #
 
-include_recipe "apache2"
-include_recipe "php::pear"
+actions :install, :upgrade, :remove, :purge
 
-cookbook_file node[:php][:ini_path] do
-  source "apache2-php5.ini"
-  owner "root"
-  group "root"
-  mode 0644
-  notifies :restart, resources("service[apache2]"), :delayed
-end
-
-packages = value_for_platform(
-  [ "centos", "redhat", "fedora", "suse" ] => {
-    "default" => %w(php php-cli)
-  },
-  "default" => %w{php5 php5-cli}
-)
-
-packages.each do |pkg|
-  package pkg do
-    action :install
-  end
-end
+attribute :package_name, :kind_of => String, :name_attribute => true
+attribute :version, :default => nil
+attribute :channel, :kind_of => String
+attribute :options, :kind_of => String
+attribute :directives, :kind_of => Hash, :default => {}
+attribute :preferred_state, :default => 'stable'

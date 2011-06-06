@@ -83,3 +83,6 @@ default['php']['configure_options'] = %W{--prefix=#{php['prefix_dir']}
                                           --with-sqlite3
                                           --with-pdo-mysql
                                           --with-pdo-sqlite}
+
+default[:php][:module_oci8][:version] = "1.4.5"
+default[:php][:module_yaml][:version] = "1.0.1"

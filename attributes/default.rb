@@ -86,11 +86,12 @@ default['php']['configure_options'] = %W{--prefix=#{php['prefix_dir']}
 
 default[:php][:module_oci8][:version] = "1.4.5"
 default[:php][:module_yaml][:version] = "1.0.1"
+default[:php][:module_stats][:version] = "1.0.2"
 
 default[:php][:max_execution_time] = "30"
 default[:php][:max_input_time] = "60"
 default[:php][:memory_limit] = "128M"
 default[:php][:post_max_size] = "8M"
-default[:php][:include_path] = ".:/usr/share/php"
+default[:php][:include_path] = ".:/usr/share/pear:/usr/share/php"
 default[:php][:upload_max_filesize] = "2M"
 default[:php][:date_timezone] = nil

@@ -214,6 +214,12 @@ def manage_pecl_ini(name, action, directives, zend_extensions)
     mode "0644"
     variables(:name => name, :extensions => extensions, :directives => directives)
     action action
+
+    if(node.recipe?("apache2"))
+      notifies :reload, "service[apache2]"
+    elsif(node.recipe?("php::fpm"))
+      notifies :reload, "service[php_fpm]"
+    end
   end
 end
 

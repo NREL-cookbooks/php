@@ -9,11 +9,13 @@
 
 case node[:platform]
 when "centos", "redhat", "fedora", "suse"
-  package "php-xml" do
+  package "php54-xml" do
     action :install
 
     if(node.recipe?("apache2"))
       notifies :reload, "service[apache2]"
+    elsif(node.recipe?("php::fpm"))
+      notifies :reload, "service[php_fpm]"
     end
   end
 when "debian", "ubuntu"

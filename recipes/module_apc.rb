@@ -21,13 +21,17 @@
 
 case node['platform']
 when "centos", "redhat", "fedora", "scientific"
-  %w{ httpd-devel pcre pcre-devel }.each do |pkg|
-    package pkg do
-      action :install
+  if(!node.recipe?("php::fpm"))
+    %w{ httpd-devel pcre pcre-devel }.each do |pkg|
+      package pkg do
+        action :install
+      end
     end
   end
+
   php_pear "apc" do
     action :install
+    version node[:php][:module_apc][:version]
     directives(:shm_size => "128M", :enable_cli => 0)
   end
 when "debian", "ubuntu"

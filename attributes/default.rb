@@ -84,8 +84,9 @@ default['php']['configure_options'] = %W{--prefix=#{php['prefix_dir']}
                                           --with-pdo-mysql
                                           --with-pdo-sqlite}
 
-default[:php][:module_oci8][:version] = "1.4.5"
-default[:php][:module_yaml][:version] = "1.0.1"
+default[:php][:module_apc][:version] = "3.1.9"
+default[:php][:module_oci8][:version] = "1.4.7"
+default[:php][:module_yaml][:version] = "1.1.0"
 default[:php][:module_stats][:version] = "1.0.2"
 
 default[:php][:max_execution_time] = "30"
@@ -95,3 +96,18 @@ default[:php][:post_max_size] = "8M"
 default[:php][:include_path] = ".:/usr/share/pear:/usr/share/php"
 default[:php][:upload_max_filesize] = "2M"
 default[:php][:date_timezone] = nil
+
+default[:php][:fpm][:pid] = "/var/run/php-fpm/php-fpm.pid"
+default[:php][:fpm][:error_log] = "/var/log/php-fpm/error.log"
+default[:php][:fpm][:www][:listen] = "127.0.0.1:9000"
+default[:php][:fpm][:www][:listen_allowed_clients] = "127.0.0.1"
+default[:php][:fpm][:www][:user] = "www-data"
+default[:php][:fpm][:www][:group] = "www-data"
+default[:php][:fpm][:www][:max_children] = 50
+default[:php][:fpm][:www][:start_servers] = 5
+default[:php][:fpm][:www][:min_spare_servers] = 5
+default[:php][:fpm][:www][:max_spare_servers] = 35
+default[:php][:fpm][:www][:max_requests] = 0
+default[:php][:fpm][:www][:security_limit_extensions] = ".php"
+default[:php][:fpm][:www][:slow_log] = "/var/log/php-fpm/www-slow.log"
+default[:php][:fpm][:www][:error_log] = "/var/log/php-fpm/www-error.log"

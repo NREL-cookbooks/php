@@ -47,6 +47,13 @@ directory "/etc/php-fpm.d" do
   recursive true
 end
 
+directory node[:php][:fpm][:www][:session_save_path] do
+  owner node[:php][:fpm_user]
+  group "root"
+  mode "0770"
+  recursive true
+end
+
 template "/etc/php-fpm.d/www.conf" do
   source "php-fpm-www.conf.erb"
   owner "root"

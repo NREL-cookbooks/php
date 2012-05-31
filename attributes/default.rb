@@ -96,6 +96,7 @@ default[:php][:post_max_size] = "8M"
 default[:php][:include_path] = ".:/usr/share/pear:/usr/share/php"
 default[:php][:upload_max_filesize] = "2M"
 default[:php][:date_timezone] = nil
+default[:php][:session_save_path] = "/var/lib/php/session"
 
 default[:php][:fpm][:pid] = "/var/run/php-fpm/php-fpm.pid"
 default[:php][:fpm][:error_log] = "/var/log/php-fpm/error.log"
@@ -111,3 +112,4 @@ default[:php][:fpm][:www][:max_requests] = 0
 default[:php][:fpm][:www][:security_limit_extensions] = ".php"
 default[:php][:fpm][:www][:slow_log] = "/var/log/php-fpm/www-slow.log"
 default[:php][:fpm][:www][:error_log] = "/var/log/php-fpm/www-error.log"
+default[:php][:fpm][:www][:session_save_path] = "/var/lib/php/session"

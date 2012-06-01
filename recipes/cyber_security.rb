@@ -1,14 +1,14 @@
 #
 # Cookbook Name:: php
-# Recipe:: ctts
+# Recipe:: cyber_security
 #
-# Copyright 2010, NREL
+# Copyright 2012, NREL
 #
 # All rights reserved - Do Not Redistribute
 #
 
-cookbook_file "#{node[:php][:ext_conf_dir]}/ctts.ini" do
-  source "ctts.ini"
+template "#{node[:php][:ext_conf_dir]}/cyber_security.ini" do
+  source "cyber_security.ini.erb"
   owner "root"
   group "root"
   mode "0644"

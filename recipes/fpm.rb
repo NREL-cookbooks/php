@@ -25,6 +25,14 @@ pkgs.each do |pkg|
   end
 end
 
+user node[:php][:fpm_user] do
+  system true
+  shell "/bin/false"
+  home "/var/www"
+  # Don't alter existing users (so pre-existing "vagrant" user can be used).
+  not_if { Etc.getpwnam(node[:php][:fpm_user]) rescue false }
+end
+
 directory "/var/log/php-fpm" do
   owner node[:php][:fpm_user]
   group "root"

@@ -70,6 +70,14 @@ template "/etc/php-fpm.d/www.conf" do
   notifies :reload, "service[php_fpm]"
 end
 
+template "#{node['php']['conf_dir']}/php.ini" do
+  source "php.ini.erb"
+  owner "root"
+  group "root"
+  mode "0644"
+  notifies :reload, "service[php_fpm]"
+end
+
 service "php_fpm" do
   service_name "php-fpm"
   supports :status => true, :reload => true

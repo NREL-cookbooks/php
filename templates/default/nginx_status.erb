@@ -1,0 +1,26 @@
+server {
+  listen 8056;
+  server_name _;
+  
+  <% if(node[:php][:fpm][:www][:status_path]) %>
+  location <%= node[:php][:fpm][:www][:status_path] %> {
+    access_log off;
+    allow 127.0.0.1;
+    deny all;
+
+    include <%= node[:nginx][:dir] %>/fastcgi_params;
+    fastcgi_pass unix:<%= node[:php][:fpm][:www][:listen] %>;
+  }
+  <% end %>
+
+  <% if(node[:php][:fpm][:www][:ping_path]) %>
+  location <%= node[:php][:fpm][:www][:ping_path] %> {
+    access_log off;
+    allow 127.0.0.1;
+    deny all;
+
+    include <%= node[:nginx][:dir] %>/fastcgi_params;
+    fastcgi_pass unix:<%= node[:php][:fpm][:www][:listen] %>;
+  }
+  <% end %>
+}

@@ -83,3 +83,20 @@ service "php_fpm" do
   supports :status => true, :reload => true
   action [:enable, :start]
 end
+
+if(node.recipe?("nginx"))
+  if(node[:php][:fpm][:www][:status_path] || node[:php][:fpm][:www][:ping_path])
+    include_recipe "nginx"
+
+    template "php_fpm_status" do
+      path "#{node[:nginx][:dir]}/sites-available/php_fpm_status"
+      source "nginx_status.erb"
+      owner "root"
+      group "root"
+      mode "0644"
+      notifies :reload, resources(:service => "nginx")
+    end
+
+    nginx_site "php_fpm_status"
+  end
+end

@@ -29,3 +29,16 @@ when "debian", "ubuntu"
     action :install
   end
 end
+
+template "#{node[:php][:ext_conf_dir]}/apc.ini" do
+  source "apc.ini.erb"
+  owner "root"
+  group "root"
+  mode "0644"
+
+  if(node[:recipes].include?("apache2") || node.recipe?("apache2"))
+    notifies :reload, "service[apache2]"
+  elsif(node[:recipes].include?("php::fpm") || node.recipe?("php::fpm"))
+    notifies :reload, "service[php_fpm]"
+  end
+end

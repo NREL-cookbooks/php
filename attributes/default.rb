@@ -84,7 +84,10 @@ default['php']['configure_options'] = %W{--prefix=#{php['prefix_dir']}
                                           --with-pdo-mysql
                                           --with-pdo-sqlite}
 
-default[:php][:module_apc][:version] = "3.1.9"
+default[:php][:module_apc][:enabled] = 1
+default[:php][:module_apc][:filters] = []
+default[:php][:module_apc][:stat] = 1
+default[:php][:module_apc][:stat_ctime] = 0
 default[:php][:module_oci8][:version] = "1.4.7"
 default[:php][:module_yaml][:version] = "1.1.0"
 default[:php][:module_stats][:version] = "1.0.2"

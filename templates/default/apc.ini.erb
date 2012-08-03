@@ -1,0 +1,12 @@
+; Enable apc extension module
+extension = apc.so
+
+;  Options for the apc module
+;  http://www.php.net/manual/en/apc.configuration.php
+
+apc.enabled=<%= node[:php][:module_apc][:enabled] %>
+<%- if(node[:php][:module_apc][:filters].any?) %>
+apc.filters="<%= node[:php][:module_apc][:filters].join(",") %>"
+<%- end %>
+apc.stat=<%= node[:php][:module_apc][:stat] %>
+apc.stat_ctime=<%= node[:php][:module_apc][:stat_ctime] %>

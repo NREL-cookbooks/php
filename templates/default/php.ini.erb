@@ -381,7 +381,7 @@ expose_php = On
 ; Maximum execution time of each script, in seconds
 ; http://php.net/max-execution-time
 ; Note: This directive is hardcoded to 0 for the CLI SAPI
-max_execution_time = <%=node[:php][:max_execution_time] %>
+max_execution_time = 30
 
 ; Maximum amount of time each script may spend parsing request data. It's a good
 ; idea to limit this time on productions servers in order to eliminate unexpectedly
@@ -391,7 +391,7 @@ max_execution_time = <%=node[:php][:max_execution_time] %>
 ; Development Value: 60 (60 seconds)
 ; Production Value: 60 (60 seconds)
 ; http://php.net/max-input-time
-max_input_time = <%=node[:php][:max_input_time] %>
+max_input_time = 60
 
 ; Maximum input variable nesting level
 ; http://php.net/max-input-nesting-level
@@ -402,7 +402,7 @@ max_input_time = <%=node[:php][:max_input_time] %>
 
 ; Maximum amount of memory a script may consume (128MB)
 ; http://php.net/memory-limit
-memory_limit = <%=node[:php][:memory_limit] %>
+memory_limit = 128M
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Error handling and logging ;
@@ -475,7 +475,7 @@ error_reporting = E_ALL & ~E_DEPRECATED & ~E_STRICT
 ; Development Value: On
 ; Production Value: Off
 ; http://php.net/display-errors
-display_errors = <%= node[:php][:display_errors] %>
+display_errors = Off
 
 ; The display of errors which occur during PHP's startup sequence are handled
 ; separately from display_errors. PHP's default behavior is to suppress those
@@ -669,7 +669,7 @@ auto_globals_jit = On
 ; Its value may be 0 to disable the limit. It is ignored if POST data reading
 ; is disabled through enable_post_data_reading.
 ; http://php.net/post-max-size
-post_max_size = <%=node[:php][:post_max_size] %>
+post_max_size = 8M
 
 ; Automatically add files before PHP document.
 ; http://php.net/auto-prepend-file
@@ -702,7 +702,7 @@ default_mimetype = "text/html"
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ; UNIX: "/path1:/path2"
-include_path = "<%=node[:php][:include_path] %>"
+;include_path = ".:/php/includes"
 ;
 ; Windows: "\path1;\path2"
 ;include_path = ".;c:\php\includes"
@@ -797,7 +797,7 @@ file_uploads = On
 
 ; Maximum allowed size for uploaded files.
 ; http://php.net/upload-max-filesize
-upload_max_filesize = <%=node[:php][:upload_max_filesize] %>
+upload_max_filesize = 2M
 
 ; Maximum number of files that can be uploaded via a single request
 max_file_uploads = 20
@@ -916,11 +916,7 @@ cli_server.color = On
 [Date]
 ; Defines the default timezone used by the date functions
 ; http://php.net/date.timezone
-<% if (node[:php][:date_timezone]) %> 
-date.timezone = <%=node[:php][:date_timezone] %>
-<% else %>
-;date.timezone = 
-<% end %>
+;date.timezone =
 
 ; http://php.net/date.default-latitude
 ;date.default_latitude = 31.7667
@@ -1011,7 +1007,7 @@ smtp_port = 25
 
 ; For Unix only.  You may supply arguments as well (default: "sendmail -t -i").
 ; http://php.net/sendmail-path
-sendmail_path = /usr/sbin/sendmail -t -i
+;sendmail_path =
 
 ; Force the addition of the specified parameters to be passed as extra parameters
 ; to the sendmail binary. These parameters will always replace the value of
@@ -1024,6 +1020,8 @@ mail.add_x_header = On
 ; The path to a log file that will log all mail() calls. Log entries include
 ; the full path of the script, line number, To address and headers.
 ;mail.log =
+; Log mail to syslog (Event Log on NT, not valid in Windows 95).
+;mail.log = syslog
 
 [SQL]
 ; http://php.net/sql.safe-mode
@@ -1395,7 +1393,7 @@ session.save_handler = files
 ; where MODE is the octal representation of the mode. Note that this
 ; does not overwrite the process's umask.
 ; http://php.net/session.save-path
-session.save_path = "/var/lib/php/session"
+;session.save_path = "/tmp"
 
 ; Whether to use cookies.
 ; http://php.net/session.use-cookies

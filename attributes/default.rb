@@ -93,16 +93,6 @@ default[:php][:module_oci8][:version] = "1.4.7"
 default[:php][:module_yaml][:version] = "1.1.0"
 default[:php][:module_stats][:version] = "1.0.2"
 
-default[:php][:max_execution_time] = "30"
-default[:php][:max_input_time] = "60"
-default[:php][:memory_limit] = "128M"
-default[:php][:display_errors] = "Off"
-default[:php][:post_max_size] = "8M"
-default[:php][:include_path] = ".:/usr/share/pear:/usr/share/php"
-default[:php][:upload_max_filesize] = "2M"
-default[:php][:date_timezone] = nil
-default[:php][:session_save_path] = "/var/lib/php/session"
-
 default[:php][:fpm][:pid] = "/var/run/php-fpm/php-fpm.pid"
 default[:php][:fpm][:error_log] = "/var/log/php-fpm/error.log"
 default[:php][:fpm][:www][:listen] = "127.0.0.1:9000"

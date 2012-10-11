@@ -19,12 +19,12 @@
 # limitations under the License.
 #
 
-case node['platform']
-when "centos", "redhat", "fedora", "scientific"
+case node['platform_family']
+when "rhel", "fedora"
   package "php54-pecl-apc" do
     action :install
   end
-when "debian", "ubuntu"
+when "debian"
   package "php-apc" do
     action :install
   end

@@ -37,7 +37,7 @@ action :install do
 
   if install_version
     Chef::Log.info("Installing #{@new_resource} version #{install_version}")
-    status = install_package(@new_resource.package_name, install_version)
+    status = install_package(@new_resource.package_name, install_version, @new_resource.answer_prompt)
     if status
       @new_resource.updated_by_last_action(true)
     end
@@ -134,14 +134,15 @@ def candidate_version
   end
 end
 
-def install_package(name, version)
-  pear_shell_out("echo -e \"\\r\" | #{@bin} -d preferred_state=#{can_haz(@new_resource, "preferred_state")} install -a#{expand_options(@new_resource.options)} #{prefix_channel(can_haz(@new_resource, "channel"))}#{name}-#{version}")
+def install_package(name, version, answer_prompt = nil)
+  pipe_answer_response = "yes '#{answer_prompt}' | " if(answer_prompt)
+  pear_shell_out("echo -e \"\\r\" | #{pipe_answer_response}#{@bin} -d preferred_state=#{can_haz(@new_resource, "preferred_state")} install -a#{expand_options(@new_resource.options)} #{prefix_channel(can_haz(@new_resource, "channel"))}#{name}-#{version}")
   manage_pecl_ini(name, :create, can_haz(@new_resource, "directives"), can_haz(@new_resource, "zend_extensions")) if pecl?
 end
 
 def upgrade_package(name, version)
   pear_shell_out("echo -e \"\\r\" | #{@bin} -d preferred_state=#{can_haz(@new_resource, "preferred_state")} upgrade -a#{expand_options(@new_resource.options)} #{prefix_channel(can_haz(@new_resource, "channel"))}#{name}-#{version}")
-  manage_pecl_ini(name, :create, can_haz(@new_resource, "directives"), can_haz(@new_resource, "zend_extensions")) if pecl?
+  manage_pecl_ini(name, :create, can_haz(@new_resource, "directives")) if pecl?
 end
 
 def remove_package(name, version)
@@ -213,6 +214,12 @@ def manage_pecl_ini(name, action, directives, zend_extensions)
     mode "0644"
     variables(:name => name, :extensions => extensions, :directives => directives)
     action action
+
+    if(node[:recipes].include?("apache2") || node.recipe?("apache2"))
+      notifies :reload, "service[apache2]"
+    elsif(node[:recipes].include?("php::fpm") || node.recipe?("php::fpm"))
+      notifies :reload, "service[php_fpm]"
+    end
   end
 end
 
@@ -240,12 +247,12 @@ def pecl?
   @pecl ||= begin
     # search as a pear first since most 3rd party channels will report pears as pecls!
     search_cmd = "pear -d preferred_state=#{can_haz(@new_resource, "preferred_state")} search#{expand_channel(can_haz(@new_resource, "channel"))} #{@new_resource.package_name}"
-    if shell_out(search_cmd).stdout =~ /\.?Matched packages/i
+    if shell_out(search_cmd).stdout =~ /^#{@new_resource.package_name}\s/i
       false
     else
       # fall back and search as a pecl
       search_cmd = "pecl -d preferred_state=#{can_haz(@new_resource, "preferred_state")} search#{expand_channel(can_haz(@new_resource, "channel"))} #{@new_resource.package_name}"
-      if shell_out(search_cmd).stdout =~ /\.?Matched packages/i
+      if shell_out(search_cmd).stdout =~ /^#{@new_resource.package_name}\s/i
         true
       else
         false

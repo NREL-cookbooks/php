@@ -40,4 +40,8 @@ template "#{node['php']['conf_dir']}/php.ini" do
   owner "root"
   group "root"
   mode "0644"
+
+  if(node.recipe?("apache2"))
+    notifies :reload, "service[apache2]"
+  end
 end

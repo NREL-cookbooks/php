@@ -27,3 +27,4 @@ attribute :options, :kind_of => String
 attribute :directives, :kind_of => Hash, :default => {}
 attribute :zend_extensions, :kind_of => Array, :default => Array.new
 attribute :preferred_state, :default => 'stable'
+attribute :answer_prompt, :default => nil

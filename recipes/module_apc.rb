@@ -36,9 +36,9 @@ template "#{node[:php][:ext_conf_dir]}/apc.ini" do
   group "root"
   mode "0644"
 
-  if(node[:recipes].include?("apache2") || node.recipe?("apache2"))
+  if(node.recipe?("apache2"))
     notifies :reload, "service[apache2]"
-  elsif(node[:recipes].include?("php::fpm") || node.recipe?("php::fpm"))
+  elsif(node.recipe?("php::fpm"))
     notifies :reload, "service[php_fpm]"
   end
 end

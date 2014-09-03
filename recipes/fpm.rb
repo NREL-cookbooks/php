@@ -22,6 +22,11 @@ pkgs = value_for_platform(
 pkgs.each do |pkg|
   package pkg do
     action :install
+    notifies :restart, "service[php_fpm]"
+
+    if(pkg !~ /pear/)
+      version node[:php][:fpm][:package_version]
+    end
   end
 end
 

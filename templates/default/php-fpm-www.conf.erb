@@ -27,10 +27,10 @@ listen.allowed_clients = <%= node[:php][:fpm][:www][:listen_allowed_clients] %>
 ; permissions must be set in order to allow connections from a web server. Many
 ; BSD-derived systems allow connections regardless of permissions. 
 ; Default Values: user and group are set as the running user
-;                 mode is set to 0666
-;listen.owner = nobody
-;listen.group = nobody
-;listen.mode = 0666
+;                 mode is set to 0660
+listen.owner = <%= node[:php][:fpm][:www][:listen_owner] %>
+listen.group = <%= node[:php][:fpm][:www][:listen_group] %>
+listen.mode = <%= node[:php][:fpm][:www][:listen_mode] %>
 
 ; Unix user/group of processes
 ; Note: The user is mandatory. If the group is not set, the default user's group

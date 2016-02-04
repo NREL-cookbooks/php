@@ -9,17 +9,15 @@
 
 include_recipe "yum::ius"
 
-pkgs = value_for_platform(
-  [ "centos", "redhat", "fedora" ] => {
-    "default" => %w{ php54-fpm php54-devel php54-cli php54-pear }
-  },
-  [ "debian", "ubuntu" ] => {
-    "default" => %w{ php5-fpm php5-dev php5-cli php-pear }
-  },
-  "default" => %w{ php5-fpm php5-dev php5-cli php-pear }
-)
+node[:php][:fpm][:packages].each do |pkg|
+  if(pkg =~ /php56u/)
+    package(pkg.gsub("php56u", "php54")) do
+      action :remove
+    end
+  end
+end
 
-pkgs.each do |pkg|
+node[:php][:fpm][:packages].each do |pkg|
   package pkg do
     action :install
     notifies :restart, "service[php_fpm]"

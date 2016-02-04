@@ -6,10 +6,6 @@
 # Copyright 2012, NREL
 #
 
-case node['platform']
-when "centos", "redhat", "fedora", "scientific"
-  package "php54-pdo" do
-    action :install
-  end
-when "debian", "ubuntu"
+package node[:php][:module_pdo][:package] do
+  action :install
 end

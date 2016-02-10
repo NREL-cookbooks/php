@@ -10,6 +10,16 @@
 include_recipe "yum::ius"
 
 node[:php][:fpm][:packages].each do |pkg|
+  if(pkg == "php56u-fpm")
+    package("php54-xml") do
+      action :remove
+    end
+
+    package("php54-common") do
+      action :remove
+    end
+  end
+
   if(pkg =~ /php56u/)
     package(pkg.gsub("php56u", "php54")) do
       action :remove

@@ -86,26 +86,18 @@ default['php']['configure_options'] = %W{--prefix=#{php['prefix_dir']}
                                           --with-pdo-sqlite}
 
 default[:php][:module_apc][:package] = value_for_platform_family(
-  ["rhel", "fedora"] => {
-    "default" => "php54-pecl-apc",
-  },
-  ["debian"] => {
-    "default" => "php-apc",
-  },
+  ["rhel", "fedora"] => "php54-pecl-apc",
+  ["debian"] => "php-apc",
 )
 default[:php][:module_apc][:enabled] = 1
 default[:php][:module_apc][:filters] = []
 default[:php][:module_apc][:stat] = 1
 default[:php][:module_apc][:stat_ctime] = 0
 default[:php][:module_pdo][:package] = value_for_platform_family(
-  ["rhel", "fedora"] => {
-    "default" => "php54-pdo",
-  },
+  ["rhel", "fedora"] => "php54-pdo",
 )
 default[:php][:module_xml][:package] = value_for_platform_family(
-  ["rhel", "fedora"] => {
-    "default" => "php54-xml",
-  },
+  ["rhel", "fedora"] => "php54-xml",
 )
 default[:php][:module_oci8][:version] = "1.4.9"
 default[:php][:module_yaml][:version] = "1.1.0"

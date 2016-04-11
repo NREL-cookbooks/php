@@ -8,4 +8,5 @@
 
 package node[:php][:module_pdo][:package] do
   action :install
+  options "--enablerepo=ius"
 end

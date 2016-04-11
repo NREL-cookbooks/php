@@ -9,6 +9,7 @@
 
 package node[:php][:module_xml][:package] do
   action :install
+  options "--enablerepo=ius"
 
   if(node.recipe?("apache2"))
     notifies :reload, "service[apache2]"

@@ -30,6 +30,7 @@ end
 node[:php][:fpm][:packages].each do |pkg|
   package pkg do
     action :install
+    options "--enablerepo=ius"
     notifies :restart, "service[php_fpm]"
 
     if(pkg !~ /pear/)

@@ -21,6 +21,7 @@
 
 package node[:php][:module_apc][:package] do
   action :install
+  options "--enablerepo=ius"
 end
 
 # Hacky workaround so we can use this same recipe to work on some of our old
@@ -29,6 +30,7 @@ end
 if(node[:php][:module_apc][:package] == "php56u-pecl-apcu")
   package "php56u-opcache" do
     action :install
+    options "--enablerepo=ius"
   end
 
   file "#{node[:php][:ext_conf_dir]}/apc.ini" do
